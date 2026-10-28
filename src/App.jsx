@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { HashRouter, NavLink, Route, Routes } from 'react-router-dom';
 
 const initialStudents = [
   { id: 1, name: 'Riya Sharma', className: 'Grade 8-A', status: 'Active', attendance: '96%', grade: 'A' },
@@ -65,7 +65,6 @@ function App() {
   }, [darkMode]);
 
   const totalStudents = students.length;
-  const totalTeachers = teachers.length;
   const activeStudents = useMemo(
     () => students.filter((student) => student.status === 'Active').length,
     [students]
@@ -88,7 +87,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className={`app-shell ${darkMode ? 'theme-dark' : 'theme-light'}`}>
         <aside className="sidebar">
           <div className="brand-wrap">
@@ -144,26 +143,9 @@ function App() {
           </header>
 
           <Routes>
-            <Route
-              path="/"
-              element={
-                <Dashboard
-                  cards={cards}
-                  classPerformance={classPerformance}
-                  students={students}
-                  teachers={teachers}
-                  upcomingEvents={upcomingEvents}
-                />
-              }
-            />
-            <Route
-              path="/students"
-              element={<StudentsPage students={students} onAddStudent={handleAddStudent} onDeleteStudent={handleDeleteStudent} />}
-            />
-            <Route
-              path="/teachers"
-              element={<TeachersPage teachers={teachers} onAddTeacher={handleAddTeacher} onDeleteTeacher={handleDeleteTeacher} />}
-            />
+            <Route path="/" element={<Dashboard cards={cards} classPerformance={classPerformance} students={students} teachers={teachers} upcomingEvents={upcomingEvents} />} />
+            <Route path="/students" element={<StudentsPage students={students} onAddStudent={handleAddStudent} onDeleteStudent={handleDeleteStudent} />} />
+            <Route path="/teachers" element={<TeachersPage teachers={teachers} onAddTeacher={handleAddTeacher} onDeleteTeacher={handleDeleteTeacher} />} />
             <Route path="/attendance" element={<PlaceholderPage title="Attendance" />} />
             <Route path="/exams" element={<PlaceholderPage title="Exams" />} />
             <Route path="/fees" element={<PlaceholderPage title="Fees" />} />
@@ -172,7 +154,7 @@ function App() {
           </Routes>
         </main>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
